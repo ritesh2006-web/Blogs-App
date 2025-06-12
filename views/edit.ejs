@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edit Post</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>My Blog</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/new">Create Post</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="form-section">
+      <h2>Edit Post</h2>
+
+      <form action="/edit/<%= post.id %>" method="POST" class="post-form">
+        <label for="title">Title:</label><br />
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value="<%= post.title %>"
+          required
+        /><br /><br />
+
+        <label for="content">Content:</label><br />
+        <textarea
+          id="content"
+          name="content"
+          rows="6"
+          required
+        ><%= post.content %></textarea><br /><br />
+
+        <button type="submit" class="btn">Save Changes</button>
+      </form>
+
+      <p><a href="/">Back to Home</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 My Blog App</p>
+  </footer>
+</body>
+</html>
