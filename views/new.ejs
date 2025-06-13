@@ -1,40 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Create New Post</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <meta charset="UTF-8">
+  <title>New Post + Ask Khuda</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
+
 <body>
   <header>
-    <h1>My Blog</h1>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/new">Create Post</a>
-    </nav>
+    <h1>🆕 Create New Post</h1>
+    <a href="/" class="btn">← Back</a>
   </header>
 
   <main>
-    <section class="form-section">
-      <h2>Create New Post</h2>
+    <!-- New Post Form -->
+    <form action="/new" method="post" class="form">
+      <input type="text" name="title" placeholder="Title" required>
+      <textarea name="content" placeholder="Write your post..." rows="5" required></textarea>
+      <button type="submit">Publish</button>
+    </form>
 
-      <form action="/new" method="POST" class="post-form">
-        <label for="title">Title:</label><br />
-        <input type="text" id="title" name="title" required /><br /><br />
+    <hr>
 
-        <label for="content">Content:</label><br />
-        <textarea id="content" name="content" rows="6" required></textarea><br /><br />
+    <h2>Stuck? 💬 Ask our AI</h2>
 
-        <button type="submit" class="btn">Create Post</button>
-      </form>
+    <!-- Ask Form -->
+    <form id="askForm" action="/ask" method="post" class="form">
+      <textarea name="prompt" placeholder="Ask anything..." rows="4" required></textarea>
+      <button type="submit">Ask</button>
+    </form>
 
-      <p><a href="/">Back to Home</a></p>
-    </section>
+    <!-- Loading message (initially hidden) -->
+    <div id="loadingMsg" style="display: none;" class="card loading">
+      <p>Generating response...</p>
+    </div>
+
+    <!-- Response from AI -->
+    <% if (response) { %>
+  <h2>AI Response:</h2>
+  <div class="ai-response">
+    <%- response %> 
+  </div>
+<% } %>
+
   </main>
 
-  <footer>
-    <p>&copy; 2025 My Blog App</p>
-  </footer>
+  <script>
+    // Show "Generating response..." when Ask form is submitted
+    const askForm = document.getElementById("askForm");
+    const loadingMsg = document.getElementById("loadingMsg");
+
+    askForm.addEventListener("submit", () => {
+      loadingMsg.style.display = "block";
+    });
+  </script>
 </body>
+
 </html>
