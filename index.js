@@ -3,12 +3,14 @@ import bodyParser from "body-parser";
 import axios from "axios";
 import dotenv from "dotenv";
 import { marked } from "marked";
+import multer from "multer";
 
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
+const upload = multer({ dest: "public/uploads/" });
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,7 +21,15 @@ let nextId = 1;
 
 // Homepage - List all posts
 app.get("/", (req, res) => {
-  res.render("index.ejs", { posts });
+  const q = req.query.q;
+  let filteredPosts = posts;
+  if (q) {
+    const query = q.toLowerCase();
+    filteredPosts = posts.filter(
+      (p) => p.title.toLowerCase().includes(query) || p.content.toLowerCase().includes(query)
+    );
+  }
+  res.render("index.ejs", { posts: filteredPosts, q });
 });
 
 app.get("/blog/:id", (req, res) => {
@@ -39,9 +49,12 @@ app.get("/new", (req, res) => {
 });
 
 // Handle form submit to create new post
-app.post("/new", (req, res) => {
+app.post("/new", upload.single("image"), (req, res) => {
   const { title, content } = req.body;
-
+  let imageUrl = null;
+  if (req.file) {
+    imageUrl = "/uploads/" + req.file.filename;
+  }
   if (!title || !content) {
     return res.status(400).send("Bad Request");
   }
@@ -50,6 +63,7 @@ app.post("/new", (req, res) => {
     id: nextId++,
     title,
     content,
+    imageUrl,
   };
 
   posts.push(newPost);

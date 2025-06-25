@@ -1,22 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Edit Post</title>
-  <link rel="stylesheet" href="/styles.css">
-</head>
-<body>
-  <header>
-    <h1>✏️ Edit Post</h1>
-    <a href="/" class="btn">← Back</a>
-  </header>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Newsreader%3Awght%40400%3B500%3B700%3B800&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
 
-  <main>
-    <form action="/edit/<%= post.id %>" method="post" class="form">
-      <input type="text" name="title" value="<%= post.title %>" required>
-      <textarea name="content" rows="5" required><%= post.content %></textarea>
-      <button type="submit">Save Changes</button>
-    </form>
-  </main>
-</body>
+    <title>Stitch Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Newsreader, "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f1f2f4] px-10 py-3">
+          <div class="flex items-center gap-4 text-[#121416]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6H42L36 24L42 42H6L12 24L6 6Z" fill="currentColor"></path></svg>
+            </div>
+            <h2 class="text-[#121416] text-lg font-bold leading-tight tracking-[-0.015em]">Bloggr</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <a class="text-[#121416] text-sm font-medium leading-normal" href="/">Home</a>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <form action="/edit/<%= post.id %>" method="POST" enctype="multipart/form-data">
+              <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+                <label class="flex flex-col min-w-40 flex-1">
+                  <p class="text-[#121416] text-base font-medium leading-normal pb-2">Title</p>
+                  <input
+                    name="title"
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#121416] focus:outline-0 focus:ring-0 border border-[#dde0e3] bg-white focus:border-[#dde0e3] h-14 placeholder:text-[#6a7581] p-[15px] text-base font-normal leading-normal"
+                    value="<%= post.title %>"
+                    required
+                  />
+                </label>
+              </div>
+              <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+                <label class="flex flex-col min-w-40 flex-1">
+                  <p class="text-[#121416] text-base font-medium leading-normal pb-2">Content</p>
+                  <textarea
+                    name="content"
+                    class="form-input flex w-full min-w-0 flex-1 resize-y overflow-auto rounded-xl text-[#121416] focus:outline-0 focus:ring-0 border border-[#dde0e3] bg-white focus:border-[#dde0e3] min-h-36 max-h-64 placeholder:text-[#6a7581] p-[15px] text-base font-normal leading-normal"
+                    required
+                  ><%= post.content %></textarea>
+                </label>
+              </div>
+              <div class="flex px-4 py-3 justify-start">
+                <label class="flex items-center cursor-pointer gap-2">
+                  <input type="file" name="image" accept="image/*" class="hidden" id="imageUpload">
+                  <span class="flex min-w-[84px] max-w-[480px] items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f1f2f4] text-[#121416] gap-2 pl-4 text-sm font-bold leading-normal tracking-[0.015em]">
+                    <div class="text-[#121416]" data-icon="Image" data-size="20px" data-weight="regular">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                        <path
+                          d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <span class="truncate">Add Picture</span>
+                  </span>
+                </label>
+              </div>
+              <div class="flex px-4 py-3 justify-end">
+                <button
+                  type="submit"
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#dce7f3] text-[#121416] text-sm font-bold leading-normal tracking-[0.015em]"
+                >
+                  <span class="truncate">Publish Changes</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
